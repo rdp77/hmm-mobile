@@ -16,7 +16,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          "Vegetables",
+          "Data Statistics",
           style: TextStyle(
               fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
         ),

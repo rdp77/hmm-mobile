@@ -25,13 +25,13 @@ class _SplashScreenState extends State<SplashScreen> {
       backgroundColor: LightColor.background,
       body: Center(
           child: CircleAvatar(
-        backgroundColor: LightColor.primary,
+        backgroundColor: LightColor.lightGrey,
         radius: 48,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Image.asset(
-            "assets/images/app_logo.png",
-            scale: 4.0,
+            "assets/images/toolbox.png",
+            scale: 1.5,
           ),
         ),
       )),

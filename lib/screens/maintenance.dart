@@ -1,5 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:flutter/material.dart';
+import 'package:hmm/models/dataMaintenance.dart';
+import 'package:hmm/utils/api.dart';
+import 'package:hmm/widgets/item.dart';
 
 class MaintenanceScreen extends StatefulWidget {
   MaintenanceScreen({Key? key}) : super(key: key);
@@ -9,6 +12,14 @@ class MaintenanceScreen extends StatefulWidget {
 }
 
 class _MaintenanceScreenState extends State<MaintenanceScreen> {
+  late Future<DataMaintenance> fetchDataMaintenance;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchDataMaintenance = fetchMaintenance();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,7 +27,7 @@ class _MaintenanceScreenState extends State<MaintenanceScreen> {
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          "Vegetables",
+          "Data Maintenance",
           style: TextStyle(
               fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
         ),
@@ -32,8 +43,77 @@ class _MaintenanceScreenState extends State<MaintenanceScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(12.0),
-        child: const Text("asdasdads"),
+        child: FutureBuilder<DataMaintenance>(
+          future: fetchDataMaintenance,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return Column(
+                children: [
+                  Flexible(
+                      flex: 1,
+                      child: Center(
+                        child: _itemKeyPointsView(
+                            snapshot.data!.total.toString(),
+                            "Total Data Maintenance"),
+                      )),
+                  Flexible(
+                    flex: 5,
+                    child: ListView.builder(
+                      padding: EdgeInsets.all(20),
+                      shrinkWrap: true,
+                      scrollDirection: Axis.vertical,
+                      itemCount: snapshot.data!.data!.length,
+                      itemBuilder: (context, index) {
+                        return ItemWidget(
+                          code: snapshot.data!.data![index].code,
+                          hardware: snapshot.data!.data![index].hardwareCode,
+                          uptime: snapshot.data!.data![index].availibility,
+                          mtbf: snapshot.data!.data![index].mtbf,
+                          mttr: snapshot.data!.data![index].mttr,
+                          date: snapshot.data!.data![index].date,
+                        );
+                      },
+                    ),
+                  )
+                ],
+              );
+            } else if (snapshot.hasError) {
+              return Text('${snapshot.error}');
+            }
+
+            // By default, show a loading spinner.
+            return const Center(child: CircularProgressIndicator());
+          },
+        ),
       ),
     );
   }
+}
+
+Widget _itemKeyPointsView(String title, String desc) {
+  return Expanded(
+    child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(16)),
+            border: Border.all(color: Color(0xffF1F1F5))),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              title,
+              style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xff23AA49)),
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            Text(desc,
+                style: TextStyle(fontSize: 14, color: Color(0xff979899))),
+          ],
+        )),
+  );
 }

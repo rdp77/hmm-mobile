@@ -98,13 +98,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       ),
                       Row(
                         children: [
-                          _itemKeyPointsView("assets/images/organic.png",
+                          _itemKeyPointsView("assets/images/admin.png",
                               snapshot.data!.users.toString(), "Total Admin"),
                           SizedBox(
                             width: 8,
                           ),
                           _itemKeyPointsView(
-                              "assets/images/expiration.png",
+                              "assets/images/hardware.png",
                               snapshot.data!.hardware.toString(),
                               "Total Hardware")
                         ],
@@ -114,12 +114,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       ),
                       Row(
                         children: [
-                          _itemKeyPointsView("assets/images/reviews.png",
-                              snapshot.data!.brands.toString(), "Total Merk"),
+                          _itemKeyPointsView(
+                              "assets/images/registered-trademark.png",
+                              snapshot.data!.brands.toString(),
+                              "Total Merk"),
                           SizedBox(
                             width: 8,
                           ),
-                          _itemKeyPointsView("assets/images/calories.png",
+                          _itemKeyPointsView("assets/images/activity-feed.png",
                               snapshot.data!.log.toString(), "Total Aktivitas")
                         ],
                       ),
@@ -158,7 +160,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       ),
                       Row(
                         children: [
-                          _categoriesView(context, "assets/images/fruits.png",
+                          _categoriesView(context, "assets/images/tools.png",
                               "Data Maintenance", MyRoutes.maintenanceRoute),
                           Expanded(
                             flex: 1,
@@ -173,7 +175,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                       child: Padding(
                                         padding: const EdgeInsets.all(12.0),
                                         child: Image.asset(
-                                          "assets/images/diary.png",
+                                          "assets/images/camera.png",
                                           scale: 4.0,
                                         ),
                                       ),
@@ -192,8 +194,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 ),
                                 onTap: () => scanQR()),
                           ),
-                          _categoriesView(context, "assets/images/meat.png",
-                              "Data Statistics", MyRoutes.maintenanceRoute),
+                          _categoriesView(
+                              context,
+                              "assets/images/line-chart.png",
+                              "Data Statistics",
+                              MyRoutes.maintenanceRoute),
                         ],
                       )
                     ],
