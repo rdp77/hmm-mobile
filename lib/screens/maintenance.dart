@@ -47,17 +47,14 @@ class _MaintenanceScreenState extends State<MaintenanceScreen> {
           future: fetchDataMaintenance,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
+              // ignore: avoid_unnecessary_containers
               return Column(
                 children: [
-                  Flexible(
-                      flex: 1,
-                      child: Center(
-                        child: _itemKeyPointsView(
-                            snapshot.data!.total.toString(),
-                            "Total Data Maintenance"),
-                      )),
-                  Flexible(
-                    flex: 5,
+                  Center(
+                    child: _itemKeyPointsView(snapshot.data!.total.toString(),
+                        "Total Data Maintenance"),
+                  ),
+                  Expanded(
                     child: ListView.builder(
                       padding: EdgeInsets.all(20),
                       shrinkWrap: true,
@@ -74,7 +71,7 @@ class _MaintenanceScreenState extends State<MaintenanceScreen> {
                         );
                       },
                     ),
-                  )
+                  ),
                 ],
               );
             } else if (snapshot.hasError) {
@@ -91,29 +88,26 @@ class _MaintenanceScreenState extends State<MaintenanceScreen> {
 }
 
 Widget _itemKeyPointsView(String title, String desc) {
-  return Expanded(
-    child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(16)),
-            border: Border.all(color: Color(0xffF1F1F5))),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              title,
-              style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xff23AA49)),
-            ),
-            SizedBox(
-              height: 8,
-            ),
-            Text(desc,
-                style: TextStyle(fontSize: 14, color: Color(0xff979899))),
-          ],
-        )),
-  );
+  return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(16)),
+          border: Border.all(color: Color(0xffF1F1F5))),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            title,
+            style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Color(0xff23AA49)),
+          ),
+          SizedBox(
+            height: 8,
+          ),
+          Text(desc, style: TextStyle(fontSize: 14, color: Color(0xff979899))),
+        ],
+      ));
 }

@@ -4,7 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hmm/models/dataCount.dart';
+import 'package:hmm/models/dataSearch.dart';
 import 'package:hmm/utils/api.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 import '../utils/routes.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
@@ -19,6 +21,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
   String _scanBarcode = 'Unknown';
   late Future<DataCount> fetchDataCount;
   String brands = '';
+  String result = '';
+  bool isAvailable = false;
 
   @override
   void initState() {
@@ -32,13 +36,26 @@ class _DashboardScreenState extends State<DashboardScreen> {
         .listen((barcode) => print(barcode));
   }
 
+  void getdata(code) async {
+    var data = await searchData(code);
+    setState(() {
+      if (data.status == 'success') {
+        result = data.data.toString();
+        isAvailable = true;
+      } else {
+        result = data.data.toString();
+        isAvailable = false;
+      }
+    });
+  }
+
   Future<void> scanQR() async {
     String barcodeScanRes;
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
       barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
           '#ff6666', 'Cancel', true, ScanMode.QR);
-      print(barcodeScanRes);
+      // print(searchData(barcodeScanRes).then((value) => value.data?.toString()));
     } on PlatformException {
       barcodeScanRes = 'Failed to get platform version.';
     }
@@ -50,6 +67,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
     setState(() {
       _scanBarcode = barcodeScanRes;
+      getdata(_scanBarcode);
     });
   }
 
@@ -192,7 +210,36 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                     )
                                   ],
                                 ),
-                                onTap: () => scanQR()),
+                                onTap: () => {
+                                      scanQR(),
+                                      if (isAvailable)
+                                        {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => Scaffold(
+                                                appBar: AppBar(
+                                                  elevation: 0,
+                                                  title: Text("Lihat Detail"),
+                                                ),
+                                                body: WebView(
+                                                  initialUrl: result,
+                                                  javascriptMode: JavascriptMode
+                                                      .unrestricted,
+                                                ),
+                                              ),
+                                            ),
+                                          )
+                                        }
+                                      else
+                                        {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(SnackBar(
+                                            content: Text(result),
+                                            backgroundColor: Colors.red,
+                                          ))
+                                        }
+                                    }),
                           ),
                           _categoriesView(
                               context,

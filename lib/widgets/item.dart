@@ -27,6 +27,8 @@ class ItemWidget extends StatefulWidget {
 
 class _ItemWidgetState extends State<ItemWidget> {
   String url = "https://hmm.farmerestateapp.com/result/";
+  bool isLoading = true;
+
   @override
   void initState() {
     super.initState();
@@ -156,7 +158,6 @@ class _ItemWidgetState extends State<ItemWidget> {
               ),
               body: WebView(
                 initialUrl: url + widget.hardware.toString(),
-                zoomEnabled: false,
                 javascriptMode: JavascriptMode.unrestricted,
               ),
             ),
