@@ -1,10 +1,10 @@
-class dataSearch {
+class DataSearch {
   String? status;
   String? data;
 
-  dataSearch({this.status, this.data});
+  DataSearch({this.status, this.data});
 
-  dataSearch.fromJson(Map<String, dynamic> json) {
+  DataSearch.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     data = json['data'];
   }

@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hmm/models/dataCount.dart';
-import 'package:hmm/models/dataSearch.dart';
 import 'package:hmm/utils/api.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import '../utils/routes.dart';
@@ -45,6 +44,35 @@ class _DashboardScreenState extends State<DashboardScreen> {
       } else {
         result = data.data.toString();
         isAvailable = false;
+      }
+    });
+  }
+
+  void codeSearch(code) async {
+    print(code);
+    var data = await searchData(code);
+    setState(() {
+      if (data.status == 'success') {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => Scaffold(
+              appBar: AppBar(
+                elevation: 0,
+                title: Text("Lihat Detail"),
+              ),
+              body: WebView(
+                initialUrl: data.data.toString(),
+                javascriptMode: JavascriptMode.unrestricted,
+              ),
+            ),
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(data.data.toString()),
+          backgroundColor: Colors.red,
+        ));
       }
     });
   }
@@ -154,20 +182,30 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(24))),
                             child: TextField(
-                                textAlignVertical: TextAlignVertical.center,
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: "Search Maintenance",
-                                  hintStyle: TextStyle(
-                                      fontSize: 14,
-                                      color: Color(0xff979899),
-                                      fontWeight: FontWeight.w500),
-                                  contentPadding: EdgeInsets.all(16),
-                                  prefixIcon: Icon(
-                                    CupertinoIcons.search,
-                                    color: Color(0xff23AA49),
-                                  ),
-                                )),
+                              maxLength: 10,
+                              keyboardType: TextInputType.text,
+                              textCapitalization: TextCapitalization.characters,
+                              textAlignVertical: TextAlignVertical.center,
+                              decoration: InputDecoration(
+                                counterText: "",
+                                border: InputBorder.none,
+                                hintText: "Search Maintenance HW...",
+                                hintStyle: TextStyle(
+                                    fontSize: 14,
+                                    color: Color(0xff979899),
+                                    fontWeight: FontWeight.w500),
+                                contentPadding: EdgeInsets.all(16),
+                                prefixIcon: Icon(
+                                  CupertinoIcons.search,
+                                  color: Color(0xff23AA49),
+                                ),
+                              ),
+                              onChanged: (context) {
+                                if (context.length == 10) {
+                                  codeSearch(context);
+                                }
+                              },
+                            ),
                           )),
                       SizedBox(
                         height: 36,
@@ -245,7 +283,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               context,
                               "assets/images/line-chart.png",
                               "Data Statistics",
-                              MyRoutes.maintenanceRoute),
+                              MyRoutes.statisticsRoute),
                         ],
                       )
                     ],
@@ -334,7 +372,7 @@ Widget _itemKeyPointsView(String imagePath, String title, String desc) {
             height: 40,
           ),
           SizedBox(
-            width: 16,
+            width: 10,
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
