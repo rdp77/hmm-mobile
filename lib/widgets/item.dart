@@ -1,7 +1,9 @@
 // ignore_for_file: prefer_const_constructors
-import 'package:flutter/material.dart';
-import 'package:hmm/themes/light_color.dart';
 import 'dart:io';
+
+import 'package:flutter/material.dart';
+import 'package:hmm/env.dart';
+import 'package:hmm/themes/light_color.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class ItemWidget extends StatefulWidget {
@@ -26,7 +28,7 @@ class ItemWidget extends StatefulWidget {
 }
 
 class _ItemWidgetState extends State<ItemWidget> {
-  String url = "https://hmm.farmerestateapp.com/result/";
+  String url = Environment.resultPage;
   bool isLoading = true;
 
   @override
@@ -147,7 +149,6 @@ class _ItemWidgetState extends State<ItemWidget> {
         ),
       ),
       onTap: () {
-        print(url + widget.hardware.toString());
         Navigator.push(
           context,
           MaterialPageRoute(

@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:flutter/material.dart';
-import 'package:hmm/models/dataStatistics.dart';
+import 'package:hmm/models/data_statistics.dart';
 import 'package:hmm/utils/api.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 

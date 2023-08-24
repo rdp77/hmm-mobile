@@ -1,13 +1,14 @@
-// ignore_for_file: prefer_const_constructors
 import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:hmm/models/dataCount.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:hmm/models/data_count.dart';
 import 'package:hmm/utils/api.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+
 import '../utils/routes.dart';
-import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({Key? key}) : super(key: key);
@@ -106,14 +107,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
     try {
       barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
           '#ff6666', 'Cancel', true, ScanMode.BARCODE);
-      print(barcodeScanRes);
     } on PlatformException {
       barcodeScanRes = 'Failed to get platform version.';
     }
 
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
     if (!mounted) return;
 
     setState(() {
@@ -131,7 +128,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           if (snapshot.hasData) {
             return SingleChildScrollView(
               child: Column(children: [
-                SizedBox(
+                const SizedBox(
                   height: 36,
                 ),
                 Padding(
@@ -139,20 +136,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   child: Column(
                     children: [
                       _seeAllView(context, "Total Data"),
-                      SizedBox(
+                      const SizedBox(
                         height: 16,
                       ),
                       Row(
                         children: [
                           _itemKeyPointsView("assets/images/admin.png",
-                              snapshot.data!.users.toString(), "Total Admin"),
-                          SizedBox(
+                              snapshot.data!.users.toString(), "Administrator"),
+                          const SizedBox(
                             width: 8,
                           ),
-                          _itemKeyPointsView(
-                              "assets/images/hardware.png",
-                              snapshot.data!.hardware.toString(),
-                              "Total Hardware")
+                          _itemKeyPointsView("assets/images/hardware.png",
+                              snapshot.data!.hardware.toString(), "Hardware")
                         ],
                       ),
                       SizedBox(
@@ -163,12 +158,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           _itemKeyPointsView(
                               "assets/images/registered-trademark.png",
                               snapshot.data!.brands.toString(),
-                              "Total Merk"),
+                              "Brands"),
                           SizedBox(
                             width: 8,
                           ),
                           _itemKeyPointsView("assets/images/activity-feed.png",
-                              snapshot.data!.log.toString(), "Total Aktivitas")
+                              snapshot.data!.log.toString(), "Activity")
                         ],
                       ),
                       SizedBox(
@@ -217,7 +212,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       Row(
                         children: [
                           _categoriesView(context, "assets/images/tools.png",
-                              "Data Maintenance", MyRoutes.maintenanceRoute),
+                              "Maintenance Data", MyRoutes.maintenanceRoute),
                           Expanded(
                             flex: 1,
                             child: InkWell(
@@ -282,7 +277,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           _categoriesView(
                               context,
                               "assets/images/line-chart.png",
-                              "Data Statistics",
+                              "Statistics Data",
                               MyRoutes.statisticsRoute),
                         ],
                       )

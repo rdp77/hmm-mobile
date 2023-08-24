@@ -9,33 +9,33 @@ class DataStatistics {
     if (json['mtbf'] != null) {
       mtbf = <Mtbf>[];
       json['mtbf'].forEach((v) {
-        mtbf!.add(new Mtbf.fromJson(v));
+        mtbf!.add(Mtbf.fromJson(v));
       });
     }
     if (json['mttr'] != null) {
       mttr = <Mttr>[];
       json['mttr'].forEach((v) {
-        mttr!.add(new Mttr.fromJson(v));
+        mttr!.add(Mttr.fromJson(v));
       });
     }
     if (json['availibility'] != null) {
       availibility = <Availibility>[];
       json['availibility'].forEach((v) {
-        availibility!.add(new Availibility.fromJson(v));
+        availibility!.add(Availibility.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.mtbf != null) {
-      data['mtbf'] = this.mtbf!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (mtbf != null) {
+      data['mtbf'] = mtbf!.map((v) => v.toJson()).toList();
     }
-    if (this.mttr != null) {
-      data['mttr'] = this.mttr!.map((v) => v.toJson()).toList();
+    if (mttr != null) {
+      data['mttr'] = mttr!.map((v) => v.toJson()).toList();
     }
-    if (this.availibility != null) {
-      data['availibility'] = this.availibility!.map((v) => v.toJson()).toList();
+    if (availibility != null) {
+      data['availibility'] = availibility!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -53,9 +53,9 @@ class Mtbf {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['nama'] = this.nama;
-    data['total'] = this.total;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['nama'] = nama;
+    data['total'] = total;
     return data;
   }
 }
@@ -72,9 +72,9 @@ class Mttr {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['nama'] = this.nama;
-    data['total'] = this.total;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['nama'] = nama;
+    data['total'] = total;
     return data;
   }
 }
@@ -91,9 +91,9 @@ class Availibility {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['nama'] = this.nama;
-    data['total'] = this.total;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['nama'] = nama;
+    data['total'] = total;
     return data;
   }
 }

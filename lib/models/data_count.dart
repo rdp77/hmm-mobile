@@ -14,11 +14,11 @@ class DataCount {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['users'] = this.users;
-    data['hardware'] = this.hardware;
-    data['brands'] = this.brands;
-    data['log'] = this.log;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['users'] = users;
+    data['hardware'] = hardware;
+    data['brands'] = brands;
+    data['log'] = log;
     return data;
   }
 }

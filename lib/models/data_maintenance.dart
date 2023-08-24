@@ -9,14 +9,14 @@ class DataMaintenance {
     if (json['data'] != null) {
       data = <Data>[];
       json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(Data.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['total'] = this.total;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['total'] = total;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
@@ -53,14 +53,14 @@ class Data {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['code'] = this.code;
-    data['hardware_code'] = this.hardwareCode;
-    data['brand'] = this.brand;
-    data['mtbf'] = this.mtbf;
-    data['mttr'] = this.mttr;
-    data['date'] = this.date;
-    data['availibility'] = this.availibility;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['code'] = code;
+    data['hardware_code'] = hardwareCode;
+    data['brand'] = brand;
+    data['mtbf'] = mtbf;
+    data['mttr'] = mttr;
+    data['date'] = date;
+    data['availibility'] = availibility;
     return data;
   }
 }

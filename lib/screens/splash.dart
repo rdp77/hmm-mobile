@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-import 'dashboard.dart';
+import 'package:http/http.dart' as http;
+
+import '../env.dart';
 import '../themes/light_color.dart';
+import 'dashboard.dart';
+import 'not_active.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -10,13 +14,34 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  Future<bool> checkWebsiteStatus() async {
+    try {
+      final response = await http.get(Uri.parse(Environment.baseUrl));
+      return response.statusCode == 200;
+    } catch (e) {
+      return false;
+    }
+  }
+
   @override
   void initState() {
     super.initState();
-    Future.delayed(
+    checkWebsiteStatus().then((isWebsiteActive) {
+      Future.delayed(
         const Duration(seconds: 3),
-        () => Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => const DashboardScreen())));
+        () {
+          if (isWebsiteActive) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const DashboardScreen()),
+            );
+          } else {
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => NotActiveScreen()));
+          }
+        },
+      );
+    });
   }
 
   @override
